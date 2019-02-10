@@ -19,9 +19,20 @@ $NORMAL
 }
 BANNER
 DATA() {
-URL="https://api.whatsapp.com/send?phone=$no&text=$tex"
-printf "${PUTIH}RESULT => $URL\n"
+URL="https://api.whatsapp.com/send?phone=$no&text=${tex}" 
+gblk=$(echo -e $URL | tr [:space:] "%20")
+echo -n "Langsung Send? (y/n) => "
+read send
+if [[ $send == y ]];then
+termux-open ${gblk}
+fi
+if [[ $send == n ]]; then
+echo -e "Tersaved"
+echo "$gblk" >> send.txt
+exit 1
+fi
 }
 read -p "Masukkan Nomor Telpon => " no
-read -p "Masukkan Teks => " tex
+echo -n "pesan => "
+read tex
 DATA $no $tex
